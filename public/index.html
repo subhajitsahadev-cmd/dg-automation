@@ -159,6 +159,56 @@
     ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: #07131C; }
     ::-webkit-scrollbar-thumb { background: #088395; border-radius: 3px; }
+
+    /* ════════════════════════════
+       CHATBOT STYLES
+    ════════════════════════════ */
+    @keyframes chatBubbleIn {
+      from { opacity:0; transform:translateY(10px) scale(.96); }
+      to   { opacity:1; transform:translateY(0) scale(1); }
+    }
+    .chat-bubble-anim { animation: chatBubbleIn .25s ease forwards; }
+
+    @keyframes chatPulseGlow {
+      0%,100% { box-shadow:0 0 0 0 rgba(8,131,149,.7); }
+      50%      { box-shadow:0 0 0 14px rgba(8,131,149,0); }
+    }
+    .chat-float-btn { animation: chatPulseGlow 2.4s infinite; }
+
+    @keyframes chatDot {
+      0%,80%,100% { transform:scale(0); opacity:.4; }
+      40%          { transform:scale(1); opacity:1; }
+    }
+    .cdot1 { animation:chatDot 1.2s infinite .0s; }
+    .cdot2 { animation:chatDot 1.2s infinite .2s; }
+    .cdot3 { animation:chatDot 1.2s infinite .4s; }
+
+    @keyframes chatSlideUp {
+      from { opacity:0; transform:translateY(20px) scale(.97); }
+      to   { opacity:1; transform:translateY(0) scale(1); }
+    }
+    #chat-window.open { animation: chatSlideUp .3s cubic-bezier(.34,1.56,.64,1) forwards; }
+
+    #chat-body::-webkit-scrollbar { width:4px; }
+    #chat-body::-webkit-scrollbar-track { background:transparent; }
+    #chat-body::-webkit-scrollbar-thumb { background:#088395; border-radius:2px; }
+
+    .chat-quick-btn {
+      border:1px solid rgba(8,131,149,.5);
+      color:#088395;
+      background:rgba(8,131,149,.08);
+      transition:all .2s;
+      font-size:.7rem;
+      padding:.28rem .7rem;
+      border-radius:9999px;
+      cursor:pointer;
+      white-space:nowrap;
+      font-family:'Poppins',sans-serif;
+      font-weight:500;
+    }
+    .chat-quick-btn:hover { background:#088395; color:#fff; }
+    #chat-user-input:focus { outline:none; border-color:#088395; }
+    #chat-notif.show { display:flex !important; }
   </style>
 </head>
 <body class="bg-darker overflow-x-hidden">
@@ -224,7 +274,7 @@
       <!-- Badge -->
       <div class="inline-flex items-center gap-2 bg-secondary/10 border border-secondary/30 text-secondary text-xs font-semibold px-4 py-2 rounded-full mb-6">
         <span class="w-2 h-2 bg-secondary rounded-full pulse-ring inline-block"></span>
-        🚀 Trusted by 250+ Growing Businesses
+        🚀 Trusted by 150+ Growing Businesses
       </div>
 
       <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight text-white mb-6">
@@ -1033,7 +1083,392 @@
 </footer>
 
 
-<!-- ════════════ SCRIPTS ════════════ -->
+<!-- ════════════════════════════════
+     CHATBOT WIDGET
+════════════════════════════════ -->
+
+<!-- Floating toggle button -->
+<button id="chat-toggle-btn"
+  class="chat-float-btn fixed bottom-6 right-6 w-16 h-16 rounded-full z-[9999] flex items-center justify-center shadow-2xl transition-transform hover:scale-105"
+  style="background:linear-gradient(135deg,#1B3C53,#088395)">
+  <svg id="chat-icon-open" class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+      d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-4 4v-4z"/>
+  </svg>
+  <svg id="chat-icon-close" class="w-7 h-7 text-white hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+  </svg>
+  <!-- Notification dot -->
+  <span id="chat-notif"
+    class="hidden absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full items-center justify-center font-bold shadow">1</span>
+</button>
+
+<!-- Chat window -->
+<div id="chat-window"
+  class="hidden fixed z-[9998] flex-col rounded-2xl overflow-hidden"
+  style="bottom:6rem; right:1.5rem; width:22rem; max-width:calc(100vw - 2rem); height:540px;
+         background:#0D1F2D; border:1px solid rgba(8,131,149,.35);
+         box-shadow:0 30px 90px rgba(0,0,0,.7);">
+
+  <!-- Header -->
+  <div class="flex items-center gap-3 px-5 py-4 flex-shrink-0"
+    style="background:linear-gradient(135deg,#1B3C53,#0a2a3d); border-bottom:1px solid rgba(8,131,149,.2)">
+    <div class="relative flex-shrink-0">
+      <div class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-white text-sm"
+        style="background:linear-gradient(135deg,#088395,#00C9E4)">DG</div>
+      <span class="absolute bottom-0 right-0 w-3 h-3 bg-green-400 rounded-full border-2" style="border-color:#1B3C53"></span>
+    </div>
+    <div class="flex-1 min-w-0">
+      <div class="text-white font-semibold text-sm">DG Automation Assistant</div>
+      <div class="text-green-400 text-xs font-medium">● Online · replies instantly</div>
+    </div>
+    <button id="chat-clear-btn" title="Clear chat"
+      class="text-gray-500 hover:text-gray-300 transition-colors p-1 flex-shrink-0">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Messages -->
+  <div id="chat-body" class="flex-1 overflow-y-auto p-4 space-y-3"
+    style="background:#07131C;
+           background-image:radial-gradient(rgba(8,131,149,.04) 1px,transparent 1px);
+           background-size:24px 24px;">
+  </div>
+
+  <!-- Quick replies -->
+  <div id="chat-quick-bar"
+    class="flex gap-2 px-4 py-2 overflow-x-auto flex-shrink-0"
+    style="border-top:1px solid rgba(255,255,255,.05);">
+  </div>
+
+  <!-- Input row -->
+  <div class="flex items-center gap-2 px-4 py-3 flex-shrink-0"
+    style="border-top:1px solid rgba(8,131,149,.2); background:#0D1F2D;">
+    <input id="chat-user-input" type="text" placeholder="Type your message…"
+      class="flex-1 text-sm text-white placeholder-gray-500 rounded-xl px-4 py-2.5 transition-colors"
+      style="background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.1);
+             font-family:'Poppins',sans-serif;"/>
+    <button id="chat-send-btn"
+      class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 transition-transform hover:scale-105"
+      style="background:linear-gradient(135deg,#088395,#00C9E4)">
+      <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+      </svg>
+    </button>
+  </div>
+</div>
+
+
+<!-- ════════════ CHATBOT SCRIPT ════════════ -->
+<script>
+(function($){
+
+  /* ══════════════════════════════════════════════════
+     ▶ LOCAL CSV CONFIG
+     FAQ reads from    /data/faq.csv       (GET /api/faq)
+     Leads save to     /data/customers.csv (POST /api/lead)
+     Zero auth. Zero external services.
+  ══════════════════════════════════════════════════ */
+  var API_BASE = ''; // same origin — http://localhost:3000
+
+  /* ── Fallback KB used if server is unreachable ── */
+  var FALLBACK_KB = [
+    { kw:['hello','hi','hey','good morning','howdy','greetings'],
+      ans:"Hello! 👋 Welcome to <strong>DG Automation</strong>. I'm your virtual assistant. How can I help you today?" },
+    { kw:['service','services','offer','provide','what do you','capabilities'],
+      ans:"We offer RPA, IoT Integration, Custom Software & AI/ML workflows. Ask me anything specific!" },
+    { kw:['price','pricing','cost','how much','fees','quote','budget'],
+      ans:"Pricing is tailored to your project. 💰 Share your <strong>phone number</strong> and we'll send a custom quote!", askPhone:true },
+    { kw:['support','downtime','issue','problem','error','not working','ticket'],
+      ans:"I'm sorry to hear that! 🛠️ Please share your Client ID or call <strong>+91-XXXXX-XXXXX</strong> for urgent support." },
+    { kw:['start','get started','begin','onboard','process','sign up'],
+      ans:"Getting started is easy! 🚀 <a href='#contact' style='color:#088395;text-decoration:underline;'>Book a free audit</a> and we'll build your roadmap in days." },
+    { kw:['ai','artificial intelligence','machine learning','ml','smart'],
+      ans:"Yes! 🧠 We build AI & ML-powered automations for intelligent document processing, predictive analytics and more." },
+    { kw:['location','where','address','office','kolkata'],
+      ans:"📍 Headquartered in <strong>Kolkata, India</strong>, serving clients globally.<br>📧 support@dgautomation.com" },
+    { kw:['human','agent','talk to','speak to','call','contact','expert'],
+      ans:"Sure! 👨‍💼 Leave your <strong>phone number</strong> and an expert calls you within 2 business hours.", askPhone:true },
+    { kw:['rpa','robotic','automate','workflow','robot'],
+      ans:"Our RPA solutions save up to <strong>70% of operational time</strong> by eliminating repetitive manual tasks. 🤖" },
+    { kw:['iot','internet of things','sensor','device','connected'],
+      ans:"We build IoT systems connecting devices to smart dashboards — real-time monitoring & predictive alerts. 📡" },
+  ];
+
+  /* ── Live KB loaded from Google Sheet ── */
+  var KB         = [];
+  var KB_LOADED  = false;
+  var QUICK      = [];
+
+  /* ── State ── */
+  var awaitingPhone = false;
+  var chatOpened    = false;
+  var lastQuestion  = '';
+
+  /* ══════════════════════════════
+     LOAD FAQ FROM LOCAL CSV FILE
+     GET /api/faq  →  reads data/faq.csv
+  ══════════════════════════════ */
+  function loadFAQ(){
+    $.ajax({
+      url: API_BASE + '/api/faq',
+      type: 'GET',
+      success: function(resp){
+        if(!resp.success || !resp.data || !resp.data.length){
+          useFallback(); return;
+        }
+        var loaded = [];
+        for(var i=0; i<resp.data.length; i++){
+          var row      = resp.data[i];
+          var question = (row['User Question'] || '').trim();
+          var answer   = (row['Chatbot Answer'] || '').trim();
+          if(!question || !answer) continue;
+
+          /* Build keywords from question words (length > 2) */
+          var kw = question.toLowerCase()
+                     .replace(/[^a-z0-9\s]/g,'')
+                     .split(/\s+/)
+                     .filter(function(w){ return w.length > 2; });
+          kw.push(question.toLowerCase()); // full question match
+
+          var askPhone = /price|cost|human|agent|talk|speak|call|quote/i.test(question);
+          loaded.push({ kw:kw, ans:answer, askPhone:askPhone, raw:question });
+        }
+        if(loaded.length > 0){
+          KB        = loaded;
+          KB_LOADED = true;
+          QUICK     = [];
+          for(var j=0; j<Math.min(5,KB.length); j++) QUICK.push(KB[j].raw);
+          console.log('[DG Chat] FAQ loaded: ' + KB.length + ' entries from faq.csv');
+        } else {
+          useFallback();
+        }
+      },
+      error: function(){
+        console.warn('[DG Chat] Could not reach /api/faq — using fallback KB');
+        useFallback();
+      }
+    });
+  }
+
+  function useFallback(){
+    KB = FALLBACK_KB;
+    KB_LOADED = true;
+    QUICK = [
+      "What services do you offer?",
+      "How much does it cost?",
+      "How do we get started?",
+      "Do you offer AI integration?",
+      "Can I talk to a human?"
+    ];
+  }
+
+  /* ══════════════════════════════
+     SAVE LEAD TO LOCAL CSV FILE
+     POST /api/lead  →  appends to data/customers.csv
+  ══════════════════════════════ */
+  function saveLeadToSheet(phone, question){
+    $.ajax({
+      url         : API_BASE + '/api/lead',
+      type        : 'POST',
+      contentType : 'application/json',
+      data        : JSON.stringify({ phone: phone, question: question || 'Not specified' }),
+      success     : function(r){
+        if(r.success){
+          console.log('[DG Chat] Lead #' + r.id + ' saved to customers.csv');
+        }
+      },
+      error: function(){
+        console.warn('[DG Chat] Could not save lead — server may be offline.');
+      }
+    });
+  }
+
+  /* ══════════════════════════════
+     CHAT UI HELPERS
+  ══════════════════════════════ */
+  function scrollBottom(){
+    var b = document.getElementById('chat-body');
+    b.scrollTop = b.scrollHeight;
+  }
+  function timeNow(){
+    return new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+  }
+  function addMsg(html, sender){
+    var t = timeNow();
+    var node;
+    if(sender==='bot'){
+      node=$('<div class="chat-bubble-anim flex items-end gap-2">'+
+        '<div class="w-7 h-7 rounded-full flex-shrink-0 flex items-center justify-center text-white text-xs font-bold" style="background:linear-gradient(135deg,#088395,#00C9E4)">DG</div>'+
+        '<div class="max-w-xs"><div class="rounded-2xl rounded-bl-sm px-4 py-3 text-sm leading-relaxed text-gray-200" style="background:rgba(27,60,83,.75);border:1px solid rgba(8,131,149,.25)">'+html+'</div>'+
+        '<div class="text-gray-600 text-xs mt-1 ml-1">'+t+'</div></div></div>');
+    } else {
+      node=$('<div class="chat-bubble-anim flex items-end justify-end gap-2">'+
+        '<div class="max-w-xs"><div class="rounded-2xl rounded-br-sm px-4 py-3 text-sm leading-relaxed text-white" style="background:linear-gradient(135deg,#088395,#00C9E4)">'+$('<div>').text(html).html()+'</div>'+
+        '<div class="text-gray-600 text-xs mt-1 mr-1 text-right">'+t+'</div></div></div>');
+    }
+    $('#chat-body').append(node);
+    scrollBottom();
+  }
+  function showTyping(){
+    var node=$('<div id="chat-typing" class="chat-bubble-anim flex items-end gap-2">'+
+      '<div class="w-7 h-7 rounded-full flex-shrink-0 flex items-center justify-center text-white text-xs font-bold" style="background:linear-gradient(135deg,#088395,#00C9E4)">DG</div>'+
+      '<div class="rounded-2xl rounded-bl-sm px-4 py-3 flex gap-1 items-center" style="background:rgba(27,60,83,.75);border:1px solid rgba(8,131,149,.25)">'+
+      '<span class="w-2 h-2 rounded-full bg-gray-400 inline-block cdot1"></span>'+
+      '<span class="w-2 h-2 rounded-full bg-gray-400 inline-block cdot2"></span>'+
+      '<span class="w-2 h-2 rounded-full bg-gray-400 inline-block cdot3"></span>'+
+      '</div></div>');
+    $('#chat-body').append(node);
+    scrollBottom();
+  }
+  function botReply(html, delay){
+    delay=delay||900;
+    showTyping();
+    setTimeout(function(){ $('#chat-typing').remove(); addMsg(html,'bot'); }, delay);
+  }
+  function renderQuick(items){
+    var bar=$('#chat-quick-bar').empty();
+    $.each(items,function(_,q){
+      bar.append('<button class="chat-quick-btn flex-shrink-0">'+q+'</button>');
+    });
+  }
+  function isPhone(txt){
+    return /^\+?[\d\s\-\(\)\.]{7,15}$/.test(txt.trim());
+  }
+  function findAnswer(txt){
+    var lower=txt.toLowerCase();
+    /* 1st pass — full question match */
+    for(var i=0;i<KB.length;i++){
+      if(KB[i].raw && lower.indexOf(KB[i].raw.toLowerCase())>-1) return KB[i];
+    }
+    /* 2nd pass — keyword match */
+    var best=null, bestScore=0;
+    for(var i=0;i<KB.length;i++){
+      var score=0;
+      for(var j=0;j<KB[i].kw.length;j++){
+        if(lower.indexOf(KB[i].kw[j])>-1) score++;
+      }
+      if(score>bestScore){ bestScore=score; best=KB[i]; }
+    }
+    return bestScore>0 ? best : null;
+  }
+
+  /* ══════════════════════════════
+     HANDLE USER MESSAGE
+  ══════════════════════════════ */
+  function handleMsg(txt){
+    txt=txt.trim();
+    if(!txt) return;
+    addMsg(txt,'user');
+    $('#chat-user-input').val('');
+
+    /* ── Phone capture mode ── */
+    if(awaitingPhone){
+      if(isPhone(txt)){
+        awaitingPhone=false;
+        /* Save to Google Sheet */
+        saveLeadToSheet(txt, lastQuestion);
+        botReply('✅ <strong>Perfect!</strong> Your number <strong>'+txt+'</strong> has been saved to our system.<br>An expert will call you within <strong>2 business hours</strong>. 🎉', 700);
+        setTimeout(function(){
+          if(QUICK.length) renderQuick(QUICK);
+        },1500);
+      } else {
+        botReply("🤔 That doesn't look like a valid number. Please enter digits like <strong>9876543210</strong> or <strong>+91 98765 43210</strong>.", 700);
+      }
+      return;
+    }
+
+    /* ── KB loading state ── */
+    if(!KB_LOADED){
+      botReply("⏳ Just a moment while I load my knowledge base...", 500);
+      var waitAttempts=0;
+      var waiter=setInterval(function(){
+        waitAttempts++;
+        if(KB_LOADED){ clearInterval(waiter); handleMsg(txt); return; }
+        if(waitAttempts>10){ clearInterval(waiter); useFallback(); handleMsg(txt); }
+      },300);
+      return;
+    }
+
+    /* ── Find answer ── */
+    lastQuestion = txt;
+    var match=findAnswer(txt);
+    if(match){
+      botReply(match.ans, 850);
+      if(match.askPhone){
+        setTimeout(function(){
+          botReply('📞 To connect you faster, may I have your <strong>phone number</strong>?', 1800);
+          awaitingPhone=true;
+          renderQuick([]);
+        },1000);
+      } else {
+        setTimeout(function(){ if(QUICK.length) renderQuick(QUICK); },1200);
+      }
+    } else {
+      botReply("Great question! 🤔 I don't have a direct answer right now.<br><br>Let me connect you with a <strong>DG Automation expert</strong>. Could you share your <strong>phone number</strong>?", 900);
+      awaitingPhone=true;
+      renderQuick([]);
+    }
+  }
+
+  /* ── Toggle chat window ── */
+  $('#chat-toggle-btn').on('click',function(){
+    var win=$('#chat-window');
+    if(win.hasClass('hidden')){
+      win.removeClass('hidden').addClass('open flex');
+      $('#chat-icon-open').addClass('hidden');
+      $('#chat-icon-close').removeClass('hidden');
+      $('#chat-notif').removeClass('show');
+      if(!chatOpened){
+        chatOpened=true;
+        setTimeout(function(){
+          botReply('👋 <strong>Welcome to DG Automation!</strong><br>I\'m your virtual assistant powered by our live FAQ database!', 400);
+        },200);
+        setTimeout(function(){
+          if(KB_LOADED && QUICK.length){
+            botReply('Here are some things you can ask me:', 600);
+            setTimeout(function(){ renderQuick(QUICK); },1400);
+          } else {
+            botReply('Ask me about our <strong>services, pricing, AI integration, support</strong> and more.', 600);
+          }
+        },1500);
+      }
+    } else {
+      win.addClass('hidden').removeClass('open flex');
+      $('#chat-icon-open').removeClass('hidden');
+      $('#chat-icon-close').addClass('hidden');
+    }
+  });
+
+  /* ── Send button & Enter key ── */
+  $('#chat-send-btn').on('click',function(){ handleMsg($('#chat-user-input').val()); });
+  $('#chat-user-input').on('keydown',function(e){ if(e.key==='Enter') handleMsg($(this).val()); });
+
+  /* ── Quick reply clicks ── */
+  $(document).on('click','.chat-quick-btn',function(){ handleMsg($(this).text()); });
+
+  /* ── Clear chat ── */
+  $('#chat-clear-btn').on('click',function(){
+    $('#chat-body').empty(); renderQuick([]); awaitingPhone=false; chatOpened=false;
+    setTimeout(function(){ botReply('Chat cleared! 🧹 How can I help you today?',300); renderQuick(QUICK); },200);
+  });
+
+  /* ── Show notif badge after 3s ── */
+  setTimeout(function(){ if(!chatOpened) $('#chat-notif').addClass('show'); },3000);
+
+  /* ── Boot: load FAQ from Google Sheet ── */
+  loadFAQ();
+
+})(jQuery);
+</script>
+
+
+
+<!-- ════════════ WEBSITE SCRIPTS ════════════ -->
 <script>
 $(document).ready(function () {
 

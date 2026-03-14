@@ -1,0 +1,12 @@
+ID,Category,User Question,Chatbot Answer,Purpose
+1,Greeting,Hello / Hi / Hey,Hello! Welcome to DG Automation. I am your virtual assistant. How can I help you optimize your workflow today?,Engagement
+2,Services,What services do you offer?,"We specialize in end-to-end industrial and business automation including Robotic Process Automation (RPA), IoT integration, and custom software solutions.",Sales
+3,Pricing,How much do your services cost?,Our pricing is tailored to the scope of your project. Would you like to speak with a consultant for a custom quote?,Lead Gen
+4,Support,My system is experiencing downtime,I am sorry to hear that. Please provide your Client ID or Ticket Number and I will escalate this to our technical support team immediately.,Retention
+5,Process,How do we get started?,Our process starts with a discovery call to audit your current systems followed by a customized automation roadmap. Would you like to schedule that call now?,Conversion
+6,Capabilities,Do you offer AI integration?,Yes we integrate advanced AI and Machine Learning models to make your automation smarter and more predictive.,Authority
+7,Contact,Where are you located?,We are headquartered in Kolkata serving clients globally. You can also reach us at support@dgautomation.com.,Trust
+8,Handoff,Can I talk to a human?,I can certainly connect you! Please leave your phone number and one of our experts will call you back shortly.,Trust
+9,RPA,What is RPA?,Robotic Process Automation automates repetitive tasks like data entry invoice processing and report generation saving up to 70 percent of operational time.,Education
+10,IoT,What is IoT integration?,We connect physical devices and sensors to smart dashboards for real-time monitoring predictive alerts and remote control of your operations.,Education
+11,General,What are your business hours?,Mon–Sat 9am–6pm IST. Email: support@dgautomation.com,Info

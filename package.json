@@ -1,0 +1,14 @@
+{
+  "name": "dg-automation-chatbot",
+  "version": "1.0.0",
+  "description": "DG Automation website with live chatbot — reads FAQ and saves leads from local CSV files",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2"
+  }
+}
