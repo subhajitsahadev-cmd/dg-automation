@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="DG Automation – Intelligent automation solutions that eliminate repetitive work, reduce costs, and accelerate growth for modern businesses."/>
+  <title>DG Automation | Intelligent Business Automation</title>
+
+  <!-- Google Fonts: Poppins -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary:   '#1B3C53',
+            secondary: '#088395',
+            dark:      '#0D1F2D',
+            darker:    '#07131C',
+            light:     '#E8F4F8',
+            muted:     '#8BA3B0',
+          },
+          fontFamily: {
+            poppins: ['Poppins', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+
+  <style>
+    * { font-family: 'Poppins', sans-serif; scroll-behavior: smooth; }
+    body { background-color: #07131C; color: #E8F4F8; }
+
+    /* ── Gradient text ── */
+    .grad-text {
+      background: linear-gradient(135deg, #088395 0%, #00C9E4 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ── Glow button ── */
+    .btn-glow {
+      background: linear-gradient(135deg, #088395, #00C9E4);
+      box-shadow: 0 0 24px rgba(8,131,149,.45);
+      transition: all .3s ease;
+    }
+    .btn-glow:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 40px rgba(8,131,149,.7);
+    }
+
+    /* ── Outline button ── */
+    .btn-outline {
+      border: 1.5px solid #088395;
+      color: #088395;
+      transition: all .3s ease;
+    }
+    .btn-outline:hover {
+      background: #088395;
+      color: #fff;
+      box-shadow: 0 0 20px rgba(8,131,149,.4);
+    }
+
+    /* ── Cards ── */
+    .card-glass {
+      background: rgba(27,60,83,.35);
+      border: 1px solid rgba(8,131,149,.25);
+      backdrop-filter: blur(12px);
+      transition: all .3s ease;
+    }
+    .card-glass:hover {
+      border-color: rgba(8,131,149,.6);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(8,131,149,.15);
+    }
+
+    /* ── Section divider ── */
+    .section-divider {
+      background: linear-gradient(90deg, transparent, #088395, transparent);
+      height: 1px;
+      opacity: .35;
+    }
+
+    /* ── Animated counter ── */
+    .counter { transition: all .3s; }
+
+    /* ── Navbar scroll ── */
+    .navbar-scrolled {
+      background: rgba(7,19,28,.95) !important;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 2px 20px rgba(0,0,0,.4);
+    }
+
+    /* ── Hero grid overlay ── */
+    .hero-grid {
+      background-image:
+        linear-gradient(rgba(8,131,149,.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(8,131,149,.07) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    /* ── Pulse ring ── */
+    @keyframes pulse-ring {
+      0%   { transform: scale(.9); box-shadow: 0 0 0 0 rgba(8,131,149,.5); }
+      70%  { transform: scale(1);  box-shadow: 0 0 0 16px rgba(8,131,149,0); }
+      100% { transform: scale(.9); box-shadow: 0 0 0 0 rgba(8,131,149,0); }
+    }
+    .pulse-ring { animation: pulse-ring 2.5s infinite; }
+
+    /* ── Float ── */
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(-12px); }
+    }
+    .float { animation: float 4s ease-in-out infinite; }
+
+    /* ── Fade-in on scroll ── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── FAQ ── */
+    .faq-answer { display: none; }
+    .faq-item.open .faq-answer { display: block; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+    .faq-icon { transition: transform .3s; }
+
+    /* ── Marquee ── */
+    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    .marquee-track { animation: marquee 22s linear infinite; display: flex; width: max-content; }
+    .marquee-track:hover { animation-play-state: paused; }
+
+    /* ── Step connector ── */
+    .step-connector {
+      background: linear-gradient(90deg, #088395, transparent);
+      height: 2px;
+      flex: 1;
+      margin-top: -2px;
+    }
+
+    /* ── Scrollbar ── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #07131C; }
+    ::-webkit-scrollbar-thumb { background: #088395; border-radius: 3px; }
+  </style>
+</head>
+<body class="bg-darker overflow-x-hidden">
+
+<!-- ════════════════════════════════
+     NAVBAR
+════════════════════════════════ -->
+<nav id="navbar" class="fixed top-0 w-full z-50 transition-all duration-300 py-4">
+  <div class="max-w-7xl mx-auto px-6 flex items-center justify-between">
+    <!-- Logo -->
+    <a href="#" class="flex items-center gap-3">
+      <div class="w-9 h-9 rounded-lg btn-glow flex items-center justify-center text-white font-bold text-sm">DG</div>
+      <span class="text-white font-semibold text-lg tracking-wide">DG <span class="grad-text">Automation</span></span>
+    </a>
+
+    <!-- Desktop nav -->
+    <ul class="hidden md:flex items-center gap-8 text-sm text-muted font-medium">
+      <li><a href="#services"     class="hover:text-secondary transition-colors">Services</a></li>
+      <li><a href="#case-studies" class="hover:text-secondary transition-colors">Results</a></li>
+      <li><a href="#process"      class="hover:text-secondary transition-colors">Process</a></li>
+      <li><a href="#testimonials" class="hover:text-secondary transition-colors">Testimonials</a></li>
+      <li><a href="#faq"          class="hover:text-secondary transition-colors">FAQ</a></li>
+    </ul>
+
+    <!-- CTA -->
+    <a href="#contact" class="hidden md:inline-flex btn-glow text-white font-semibold text-sm px-6 py-2.5 rounded-full">
+      Get Free Audit →
+    </a>
+
+    <!-- Hamburger -->
+    <button id="menu-btn" class="md:hidden text-white focus:outline-none">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="hidden md:hidden bg-dark/95 backdrop-blur px-6 py-4 mt-2 space-y-4 text-sm">
+    <a href="#services"     class="block text-muted hover:text-secondary">Services</a>
+    <a href="#case-studies" class="block text-muted hover:text-secondary">Results</a>
+    <a href="#process"      class="block text-muted hover:text-secondary">Process</a>
+    <a href="#testimonials" class="block text-muted hover:text-secondary">Testimonials</a>
+    <a href="#faq"          class="block text-muted hover:text-secondary">FAQ</a>
+    <a href="#contact"      class="block btn-glow text-white font-semibold px-5 py-2.5 rounded-full text-center">Get Free Audit →</a>
+  </div>
+</nav>
+
+
+<!-- ════════════════════════════════
+     HERO SECTION
+════════════════════════════════ -->
+<section id="hero" class="relative min-h-screen flex items-center hero-grid overflow-hidden">
+
+  <!-- Ambient glows -->
+  <div class="absolute -top-40 -left-40 w-96 h-96 rounded-full opacity-20" style="background:radial-gradient(circle,#088395,transparent 70%)"></div>
+  <div class="absolute -bottom-40 -right-40 w-96 h-96 rounded-full opacity-15" style="background:radial-gradient(circle,#1B3C53,transparent 70%)"></div>
+
+  <div class="max-w-7xl mx-auto px-6 pt-32 pb-20 grid lg:grid-cols-2 gap-16 items-center w-full">
+
+    <!-- Left -->
+    <div class="fade-up">
+      <!-- Badge -->
+      <div class="inline-flex items-center gap-2 bg-secondary/10 border border-secondary/30 text-secondary text-xs font-semibold px-4 py-2 rounded-full mb-6">
+        <span class="w-2 h-2 bg-secondary rounded-full pulse-ring inline-block"></span>
+        🚀 Trusted by 150+ Growing Businesses
+      </div>
+
+      <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight text-white mb-6">
+        Automate the Grind.<br/>
+        <span class="grad-text">Scale Without Limits.</span>
+      </h1>
+
+      <p class="text-muted text-lg leading-relaxed mb-8 max-w-lg">
+        DG Automation replaces repetitive manual work with intelligent workflows — so your team focuses on what actually grows revenue.
+      </p>
+
+      <!-- Urgency bar -->
+      <div class="flex items-center gap-2 bg-secondary/10 border border-secondary/20 rounded-lg px-4 py-3 mb-8 text-sm">
+        <svg class="w-4 h-4 text-secondary flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a8 8 0 100 16A8 8 0 0010 2zm1 11H9v-2h2v2zm0-4H9V5h2v4z"/></svg>
+        <span class="text-light/80"><strong class="text-secondary">Limited slots:</strong> Only <strong class="text-white">3 free automation audits</strong> available this month.</span>
+      </div>
+
+      <div class="flex flex-wrap gap-4">
+        <a href="#contact" class="btn-glow text-white font-bold px-8 py-4 rounded-full text-base">
+          Claim Your Free Audit →
+        </a>
+        <a href="#case-studies" class="btn-outline font-semibold px-8 py-4 rounded-full text-base">
+          See Real Results
+        </a>
+      </div>
+
+      <!-- Trust micro-badges -->
+      <div class="flex flex-wrap gap-6 mt-10 text-xs text-muted">
+        <span class="flex items-center gap-1.5"><span class="text-secondary">✓</span> No-code setup</span>
+        <span class="flex items-center gap-1.5"><span class="text-secondary">✓</span> ROI in 30 days</span>
+        <span class="flex items-center gap-1.5"><span class="text-secondary">✓</span> Dedicated support</span>
+        <span class="flex items-center gap-1.5"><span class="text-secondary">✓</span> GDPR compliant</span>
+      </div>
+    </div>
+
+    <!-- Right — floating dashboard mockup -->
+    <div class="hidden lg:flex justify-center fade-up">
+      <div class="relative w-full max-w-md float">
+        <!-- Main card -->
+        <div class="card-glass rounded-2xl p-6 shadow-2xl">
+          <div class="flex items-center justify-between mb-5">
+            <span class="text-white font-semibold text-sm">Automation Dashboard</span>
+            <span class="text-xs bg-green-500/20 text-green-400 px-2.5 py-1 rounded-full font-medium">● Live</span>
+          </div>
+          <!-- KPI row -->
+          <div class="grid grid-cols-3 gap-3 mb-5">
+            <div class="bg-primary/40 rounded-xl p-3 text-center">
+              <div class="text-secondary font-bold text-xl">98%</div>
+              <div class="text-muted text-xs mt-1">Accuracy</div>
+            </div>
+            <div class="bg-primary/40 rounded-xl p-3 text-center">
+              <div class="text-secondary font-bold text-xl">4.2x</div>
+              <div class="text-muted text-xs mt-1">Speed Gain</div>
+            </div>
+            <div class="bg-primary/40 rounded-xl p-3 text-center">
+              <div class="text-secondary font-bold text-xl">$0</div>
+              <div class="text-muted text-xs mt-1">Manual Cost</div>
+            </div>
+          </div>
+          <!-- Mini bar chart -->
+          <div class="flex items-end gap-2 h-20 mb-5">
+            <div class="flex-1 bg-secondary/30 rounded-t" style="height:40%"></div>
+            <div class="flex-1 bg-secondary/50 rounded-t" style="height:60%"></div>
+            <div class="flex-1 bg-secondary/70 rounded-t" style="height:75%"></div>
+            <div class="flex-1 bg-secondary    rounded-t" style="height:90%"></div>
+            <div class="flex-1 bg-secondary/80 rounded-t" style="height:80%"></div>
+            <div class="flex-1 bg-secondary/60 rounded-t" style="height:65%"></div>
+            <div class="flex-1 bg-secondary    rounded-t" style="height:100%"></div>
+          </div>
+          <!-- Tasks -->
+          <div class="space-y-2">
+            <div class="flex items-center gap-3 bg-primary/30 rounded-lg px-3 py-2">
+              <span class="w-2 h-2 bg-green-400 rounded-full"></span>
+              <span class="text-light/80 text-xs flex-1">Invoice processing</span>
+              <span class="text-green-400 text-xs font-medium">Done</span>
+            </div>
+            <div class="flex items-center gap-3 bg-primary/30 rounded-lg px-3 py-2">
+              <span class="w-2 h-2 bg-secondary rounded-full pulse-ring"></span>
+              <span class="text-light/80 text-xs flex-1">Lead nurture sequence</span>
+              <span class="text-secondary text-xs font-medium">Running</span>
+            </div>
+            <div class="flex items-center gap-3 bg-primary/30 rounded-lg px-3 py-2">
+              <span class="w-2 h-2 bg-yellow-400 rounded-full"></span>
+              <span class="text-light/80 text-xs flex-1">Report generation</span>
+              <span class="text-yellow-400 text-xs font-medium">Queued</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Floating badge -->
+        <div class="absolute -bottom-5 -left-8 card-glass rounded-xl px-4 py-3 flex items-center gap-3 shadow-xl">
+          <span class="text-2xl">⚡</span>
+          <div>
+            <div class="text-white text-sm font-bold">72 hrs saved</div>
+            <div class="text-muted text-xs">this week alone</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════
+     LOGO / CLIENT MARQUEE
+════════════════════════════════ -->
+<section class="py-10 border-y border-white/5 overflow-hidden">
+  <p class="text-center text-xs text-muted uppercase tracking-widest mb-6 font-medium">Trusted by forward-thinking companies</p>
+  <div class="relative overflow-hidden">
+    <div class="marquee-track gap-16 px-8">
+      <!-- repeated twice for seamless loop -->
+      <span class="text-muted/50 font-bold text-xl tracking-widest whitespace-nowrap">NEXAFLOW</span>
+      <span class="text-muted/50 font-bold text-xl tracking-widest whitespace-nowrap">ORBITRA</span>
+      <span class="text-muted/50 font-bold text-xl tracking-widest whitespace-nowrap">STACKLANE</span>
+      <span class="text-muted/50 font-bold text-xl tracking-widest whitespace-nowrap">VELOTECH</span>
+      <span class="text-muted/50 font-bold text-xl tracking-widest whitespace-nowrap">DRIFTOPS</span>
+      <span class="text-muted/50 font-bold text-xl tracking-widest whitespace-nowrap">CLARITIQ</span>
+      <span class="text-muted/50 font-bold text-xl tracking-widest whitespace-nowrap">PULSEDGE</span>
+      <span class="text-muted/50 font-bold text-xl tracking-widest whitespace-nowrap">NEXAFLOW</span>
+      <span class="text-muted/50 font-bold text-xl tracking-widest whitespace-nowrap">ORBITRA</span>
+      <span class="text-muted/50 font-bold text-xl tracking-widest whitespace-nowrap">STACKLANE</span>
+      <span class="text-muted/50 font-bold text-xl tracking-widest whitespace-nowrap">VELOTECH</span>
+      <span class="text-muted/50 font-bold text-xl tracking-widest whitespace-nowrap">DRIFTOPS</span>
+      <span class="text-muted/50 font-bold text-xl tracking-widest whitespace-nowrap">CLARITIQ</span>
+      <span class="text-muted/50 font-bold text-xl tracking-widest whitespace-nowrap">PULSEDGE</span>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════
+     STATS BAND
+════════════════════════════════ -->
+<section class="py-16">
+  <div class="max-w-5xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-6">
+    <div class="text-center fade-up">
+      <div class="grad-text text-4xl font-extrabold counter" data-target="150">0</div>
+      <div class="text-muted text-sm mt-1">+ Clients Automated</div>
+    </div>
+    <div class="text-center fade-up">
+      <div class="grad-text text-4xl font-extrabold counter" data-target="98">0</div>
+      <div class="text-muted text-sm mt-1">% Accuracy Rate</div>
+    </div>
+    <div class="text-center fade-up">
+      <div class="grad-text text-4xl font-extrabold counter" data-target="4200">0</div>
+      <div class="text-muted text-sm mt-1">+ Hours Saved Monthly</div>
+    </div>
+    <div class="text-center fade-up">
+      <div class="grad-text text-4xl font-extrabold counter" data-target="30">0</div>
+      <div class="text-muted text-sm mt-1">Day ROI Guarantee</div>
+    </div>
+  </div>
+</section>
+
+
+<div class="section-divider max-w-5xl mx-auto"></div>
+
+
+<!-- ════════════════════════════════
+     PROBLEM SECTION
+════════════════════════════════ -->
+<section id="problem" class="py-24">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="text-center mb-16 fade-up">
+      <span class="text-secondary text-sm font-semibold uppercase tracking-widest">The Real Problem</span>
+      <h2 class="text-3xl md:text-4xl font-extrabold text-white mt-3">
+        Your team is <span class="grad-text">drowning in manual work</span>
+      </h2>
+      <p class="text-muted mt-4 max-w-2xl mx-auto">Every hour spent on repetitive tasks is an hour not spent growing your business. Sound familiar?</p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="card-glass rounded-2xl p-6 fade-up">
+        <div class="text-3xl mb-4">😫</div>
+        <h3 class="text-white font-bold text-lg mb-2">Hours Lost Every Day</h3>
+        <p class="text-muted text-sm leading-relaxed">Your team manually copies data between tools, sends follow-up emails, and generates the same reports — every. single. day.</p>
+      </div>
+      <div class="card-glass rounded-2xl p-6 fade-up">
+        <div class="text-3xl mb-4">❌</div>
+        <h3 class="text-white font-bold text-lg mb-2">Human Errors Are Costly</h3>
+        <p class="text-muted text-sm leading-relaxed">One wrong entry in a spreadsheet ripples across your entire workflow. Mistakes cost money, time, and customer trust.</p>
+      </div>
+      <div class="card-glass rounded-2xl p-6 fade-up">
+        <div class="text-3xl mb-4">📉</div>
+        <h3 class="text-white font-bold text-lg mb-2">Growth Bottlenecks</h3>
+        <p class="text-muted text-sm leading-relaxed">You can't scale if every new customer means more manual work. Your growth is capped by your team's bandwidth.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════
+     SOLUTION SECTION
+════════════════════════════════ -->
+<section id="solution" class="py-24 relative overflow-hidden">
+  <div class="absolute inset-0 opacity-5" style="background:radial-gradient(ellipse at 50% 50%,#088395,transparent 70%)"></div>
+  <div class="max-w-6xl mx-auto px-6 relative">
+    <div class="grid lg:grid-cols-2 gap-16 items-center">
+
+      <div class="fade-up">
+        <span class="text-secondary text-sm font-semibold uppercase tracking-widest">Our Solution</span>
+        <h2 class="text-3xl md:text-4xl font-extrabold text-white mt-3 mb-6">
+          Intelligent automation that <span class="grad-text">works while you sleep</span>
+        </h2>
+        <p class="text-muted text-base leading-relaxed mb-6">
+          DG Automation maps your existing workflows, identifies every bottleneck, and builds custom automation pipelines that eliminate manual work — permanently.
+        </p>
+        <ul class="space-y-4">
+          <li class="flex items-start gap-3">
+            <span class="mt-1 w-5 h-5 flex-shrink-0 bg-secondary/20 text-secondary rounded-full flex items-center justify-center text-xs font-bold">✓</span>
+            <span class="text-light/80 text-sm">End-to-end workflow analysis and mapping</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="mt-1 w-5 h-5 flex-shrink-0 bg-secondary/20 text-secondary rounded-full flex items-center justify-center text-xs font-bold">✓</span>
+            <span class="text-light/80 text-sm">Custom-built automations integrated with your tools</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="mt-1 w-5 h-5 flex-shrink-0 bg-secondary/20 text-secondary rounded-full flex items-center justify-center text-xs font-bold">✓</span>
+            <span class="text-light/80 text-sm">Real-time monitoring and performance reporting</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="mt-1 w-5 h-5 flex-shrink-0 bg-secondary/20 text-secondary rounded-full flex items-center justify-center text-xs font-bold">✓</span>
+            <span class="text-light/80 text-sm">Dedicated automation engineer on your account</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4 fade-up">
+        <div class="card-glass rounded-2xl p-5">
+          <div class="text-3xl mb-3">🔄</div>
+          <div class="text-white font-bold text-sm mb-1">Data Sync</div>
+          <div class="text-muted text-xs">Zero-touch data flow across all your platforms</div>
+        </div>
+        <div class="card-glass rounded-2xl p-5 mt-6">
+          <div class="text-3xl mb-3">📧</div>
+          <div class="text-white font-bold text-sm mb-1">Smart Outreach</div>
+          <div class="text-muted text-xs">AI-triggered emails & follow-ups at the right moment</div>
+        </div>
+        <div class="card-glass rounded-2xl p-5">
+          <div class="text-3xl mb-3">📊</div>
+          <div class="text-white font-bold text-sm mb-1">Auto Reports</div>
+          <div class="text-muted text-xs">Reports generated & delivered — automatically</div>
+        </div>
+        <div class="card-glass rounded-2xl p-5 mt-6">
+          <div class="text-3xl mb-3">🤖</div>
+          <div class="text-white font-bold text-sm mb-1">AI Workflows</div>
+          <div class="text-muted text-xs">LLM-powered decision layers in your pipeline</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════
+     SERVICES SECTION
+════════════════════════════════ -->
+<section id="services" class="py-24 bg-dark/40">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="text-center mb-16 fade-up">
+      <span class="text-secondary text-sm font-semibold uppercase tracking-widest">What We Offer</span>
+      <h2 class="text-3xl md:text-4xl font-extrabold text-white mt-3">
+        Services built for <span class="grad-text">maximum impact</span>
+      </h2>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <!-- Service cards -->
+      <div class="card-glass rounded-2xl p-6 fade-up group">
+        <div class="w-12 h-12 bg-secondary/15 rounded-xl flex items-center justify-center text-2xl mb-5 group-hover:bg-secondary/25 transition-colors">⚙️</div>
+        <h3 class="text-white font-bold text-lg mb-2">Process Automation</h3>
+        <p class="text-muted text-sm leading-relaxed mb-4">Automate repetitive business processes — invoicing, data entry, approval flows, and more — saving 20+ hours per week.</p>
+        <div class="text-secondary text-xs font-semibold">→ Avg. 92% time saved</div>
+      </div>
+
+      <div class="card-glass rounded-2xl p-6 fade-up group">
+        <div class="w-12 h-12 bg-secondary/15 rounded-xl flex items-center justify-center text-2xl mb-5 group-hover:bg-secondary/25 transition-colors">🔗</div>
+        <h3 class="text-white font-bold text-lg mb-2">CRM & Tool Integration</h3>
+        <p class="text-muted text-sm leading-relaxed mb-4">Connect your CRM, ERP, email, Slack, Sheets, and 500+ apps into one seamless automated ecosystem.</p>
+        <div class="text-secondary text-xs font-semibold">→ 500+ integrations available</div>
+      </div>
+
+      <div class="card-glass rounded-2xl p-6 fade-up group">
+        <div class="w-12 h-12 bg-secondary/15 rounded-xl flex items-center justify-center text-2xl mb-5 group-hover:bg-secondary/25 transition-colors">📩</div>
+        <h3 class="text-white font-bold text-lg mb-2">Email & Lead Automation</h3>
+        <p class="text-muted text-sm leading-relaxed mb-4">Automated nurture sequences, lead scoring, and follow-ups that convert prospects on autopilot — 24/7.</p>
+        <div class="text-secondary text-xs font-semibold">→ 3x higher conversion rates</div>
+      </div>
+
+      <div class="card-glass rounded-2xl p-6 fade-up group">
+        <div class="w-12 h-12 bg-secondary/15 rounded-xl flex items-center justify-center text-2xl mb-5 group-hover:bg-secondary/25 transition-colors">📋</div>
+        <h3 class="text-white font-bold text-lg mb-2">Reporting & Analytics</h3>
+        <p class="text-muted text-sm leading-relaxed mb-4">Auto-generated dashboards and reports delivered to your inbox every morning — no manual data pulling.</p>
+        <div class="text-secondary text-xs font-semibold">→ Real-time insights always</div>
+      </div>
+
+      <div class="card-glass rounded-2xl p-6 fade-up group">
+        <div class="w-12 h-12 bg-secondary/15 rounded-xl flex items-center justify-center text-2xl mb-5 group-hover:bg-secondary/25 transition-colors">🤖</div>
+        <h3 class="text-white font-bold text-lg mb-2">AI-Powered Workflows</h3>
+        <p class="text-muted text-sm leading-relaxed mb-4">Inject LLM intelligence into your workflows — smart classification, content generation, and decision routing.</p>
+        <div class="text-secondary text-xs font-semibold">→ GPT-4 powered logic layers</div>
+      </div>
+
+      <div class="card-glass rounded-2xl p-6 fade-up group">
+        <div class="w-12 h-12 bg-secondary/15 rounded-xl flex items-center justify-center text-2xl mb-5 group-hover:bg-secondary/25 transition-colors">🛡️</div>
+        <h3 class="text-white font-bold text-lg mb-2">Automation Maintenance</h3>
+        <p class="text-muted text-sm leading-relaxed mb-4">Ongoing monitoring, updates, and optimization to ensure your automations run flawlessly — forever.</p>
+        <div class="text-secondary text-xs font-semibold">→ 99.9% uptime SLA</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════
+     CASE STUDIES
+════════════════════════════════ -->
+<section id="case-studies" class="py-24">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="text-center mb-16 fade-up">
+      <span class="text-secondary text-sm font-semibold uppercase tracking-widest">Real Results</span>
+      <h2 class="text-3xl md:text-4xl font-extrabold text-white mt-3">
+        Clients who <span class="grad-text">transformed their operations</span>
+      </h2>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6">
+
+      <div class="card-glass rounded-2xl p-6 fade-up">
+        <div class="flex items-center gap-3 mb-5">
+          <div class="w-10 h-10 bg-secondary/20 rounded-full flex items-center justify-center text-secondary font-bold text-sm">NF</div>
+          <div>
+            <div class="text-white font-semibold text-sm">NexaFlow SaaS</div>
+            <div class="text-muted text-xs">B2B Software</div>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3 mb-4">
+          <div class="bg-primary/40 rounded-lg p-3 text-center">
+            <div class="grad-text font-extrabold text-2xl">68%</div>
+            <div class="text-muted text-xs">Cost Reduction</div>
+          </div>
+          <div class="bg-primary/40 rounded-lg p-3 text-center">
+            <div class="grad-text font-extrabold text-2xl">120h</div>
+            <div class="text-muted text-xs">Saved / Month</div>
+          </div>
+        </div>
+        <p class="text-muted text-sm leading-relaxed">"We automated our entire onboarding pipeline. What used to take 3 days now happens in 4 hours with zero manual effort."</p>
+      </div>
+
+      <div class="card-glass rounded-2xl p-6 fade-up border-secondary/40">
+        <div class="flex items-center gap-3 mb-5">
+          <div class="w-10 h-10 bg-secondary/20 rounded-full flex items-center justify-center text-secondary font-bold text-sm">VT</div>
+          <div>
+            <div class="text-white font-semibold text-sm">VeloTech Agency</div>
+            <div class="text-muted text-xs">Digital Marketing</div>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3 mb-4">
+          <div class="bg-primary/40 rounded-lg p-3 text-center">
+            <div class="grad-text font-extrabold text-2xl">4.3x</div>
+            <div class="text-muted text-xs">Revenue Growth</div>
+          </div>
+          <div class="bg-primary/40 rounded-lg p-3 text-center">
+            <div class="grad-text font-extrabold text-2xl">$82k</div>
+            <div class="text-muted text-xs">Annual Savings</div>
+          </div>
+        </div>
+        <p class="text-muted text-sm leading-relaxed">"Lead follow-up now happens instantly and automatically. Our close rate jumped from 12% to 38% in just 45 days."</p>
+      </div>
+
+      <div class="card-glass rounded-2xl p-6 fade-up">
+        <div class="flex items-center gap-3 mb-5">
+          <div class="w-10 h-10 bg-secondary/20 rounded-full flex items-center justify-center text-secondary font-bold text-sm">DO</div>
+          <div>
+            <div class="text-white font-semibold text-sm">DriftOps Logistics</div>
+            <div class="text-muted text-xs">Operations</div>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3 mb-4">
+          <div class="bg-primary/40 rounded-lg p-3 text-center">
+            <div class="grad-text font-extrabold text-2xl">99%</div>
+            <div class="text-muted text-xs">Error Reduction</div>
+          </div>
+          <div class="bg-primary/40 rounded-lg p-3 text-center">
+            <div class="grad-text font-extrabold text-2xl">18d</div>
+            <div class="text-muted text-xs">To Full ROI</div>
+          </div>
+        </div>
+        <p class="text-muted text-sm leading-relaxed">"Data entry errors were costing us thousands monthly. DG Automation eliminated them entirely in under 3 weeks."</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════
+     TESTIMONIALS
+════════════════════════════════ -->
+<section id="testimonials" class="py-24 bg-dark/40">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="text-center mb-16 fade-up">
+      <span class="text-secondary text-sm font-semibold uppercase tracking-widest">Social Proof</span>
+      <h2 class="text-3xl md:text-4xl font-extrabold text-white mt-3">
+        What our clients <span class="grad-text">say about us</span>
+      </h2>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <div class="card-glass rounded-2xl p-6 fade-up">
+        <div class="flex gap-1 mb-4">★★★★★</div>
+        <p class="text-light/80 text-sm leading-relaxed mb-5">"DG Automation cut our invoicing time from 6 hours to 20 minutes. The ROI was visible within the first week. Absolutely game-changing."</p>
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 bg-secondary/30 rounded-full flex items-center justify-center text-secondary font-bold text-sm">AM</div>
+          <div>
+            <div class="text-white font-semibold text-sm">Alex Morgan</div>
+            <div class="text-muted text-xs">CFO, NexaFlow</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-glass rounded-2xl p-6 fade-up">
+        <div class="flex gap-1 mb-4 text-yellow-400">★★★★★</div>
+        <p class="text-light/80 text-sm leading-relaxed mb-5">"We went from 2 full-time ops staff to zero — all their work is now automated. That's $120k/year back in our pocket."</p>
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 bg-secondary/30 rounded-full flex items-center justify-center text-secondary font-bold text-sm">SP</div>
+          <div>
+            <div class="text-white font-semibold text-sm">Sarah Patel</div>
+            <div class="text-muted text-xs">CEO, Claritiq</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-glass rounded-2xl p-6 fade-up">
+        <div class="flex gap-1 mb-4 text-yellow-400">★★★★★</div>
+        <p class="text-light/80 text-sm leading-relaxed mb-5">"The onboarding was smooth and the team really understood our workflows. Live in 2 weeks, ROI in 3. Highly recommend."</p>
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 bg-secondary/30 rounded-full flex items-center justify-center text-secondary font-bold text-sm">JK</div>
+          <div>
+            <div class="text-white font-semibold text-sm">James Kim</div>
+            <div class="text-muted text-xs">COO, Orbitra</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-glass rounded-2xl p-6 fade-up">
+        <div class="flex gap-1 mb-4 text-yellow-400">★★★★★</div>
+        <p class="text-light/80 text-sm leading-relaxed mb-5">"I was skeptical at first, but the results speak for themselves. 80+ hours saved per month — that's real money and time back."</p>
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 bg-secondary/30 rounded-full flex items-center justify-center text-secondary font-bold text-sm">LR</div>
+          <div>
+            <div class="text-white font-semibold text-sm">Lisa Rodriguez</div>
+            <div class="text-muted text-xs">Head of Ops, Stacklane</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-glass rounded-2xl p-6 fade-up">
+        <div class="flex gap-1 mb-4 text-yellow-400">★★★★★</div>
+        <p class="text-light/80 text-sm leading-relaxed mb-5">"Our sales team stopped wasting time on CRM updates. Everything syncs automatically now. Morale and performance both improved."</p>
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 bg-secondary/30 rounded-full flex items-center justify-center text-secondary font-bold text-sm">TW</div>
+          <div>
+            <div class="text-white font-semibold text-sm">Tom Walker</div>
+            <div class="text-muted text-xs">Sales Director, Velotech</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-glass rounded-2xl p-6 fade-up">
+        <div class="flex gap-1 mb-4 text-yellow-400">★★★★★</div>
+        <p class="text-light/80 text-sm leading-relaxed mb-5">"We scaled from 50 to 300 clients without adding a single ops hire. DG Automation made that possible. Period."</p>
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 bg-secondary/30 rounded-full flex items-center justify-center text-secondary font-bold text-sm">NC</div>
+          <div>
+            <div class="text-white font-semibold text-sm">Nina Chen</div>
+            <div class="text-muted text-xs">Founder, Pulsedge</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════
+     PROCESS
+════════════════════════════════ -->
+<section id="process" class="py-24">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="text-center mb-16 fade-up">
+      <span class="text-secondary text-sm font-semibold uppercase tracking-widest">How It Works</span>
+      <h2 class="text-3xl md:text-4xl font-extrabold text-white mt-3">
+        Live and automated in <span class="grad-text">4 simple steps</span>
+      </h2>
+    </div>
+
+    <div class="grid md:grid-cols-4 gap-6 relative">
+
+      <div class="card-glass rounded-2xl p-6 text-center fade-up">
+        <div class="w-12 h-12 btn-glow rounded-full flex items-center justify-center text-white font-extrabold text-xl mx-auto mb-4">1</div>
+        <h3 class="text-white font-bold mb-2">Free Audit</h3>
+        <p class="text-muted text-sm">We analyze your workflows, tools, and pain points — for free. Zero commitment.</p>
+      </div>
+
+      <div class="card-glass rounded-2xl p-6 text-center fade-up">
+        <div class="w-12 h-12 btn-glow rounded-full flex items-center justify-center text-white font-extrabold text-xl mx-auto mb-4">2</div>
+        <h3 class="text-white font-bold mb-2">Custom Blueprint</h3>
+        <p class="text-muted text-sm">We design a tailored automation roadmap with ROI projections specific to your business.</p>
+      </div>
+
+      <div class="card-glass rounded-2xl p-6 text-center fade-up">
+        <div class="w-12 h-12 btn-glow rounded-full flex items-center justify-center text-white font-extrabold text-xl mx-auto mb-4">3</div>
+        <h3 class="text-white font-bold mb-2">Build & Launch</h3>
+        <p class="text-muted text-sm">Our engineers build and test your automations — live within 2 weeks, guaranteed.</p>
+      </div>
+
+      <div class="card-glass rounded-2xl p-6 text-center fade-up">
+        <div class="w-12 h-12 btn-glow rounded-full flex items-center justify-center text-white font-extrabold text-xl mx-auto mb-4">4</div>
+        <h3 class="text-white font-bold mb-2">Scale & Optimize</h3>
+        <p class="text-muted text-sm">Ongoing support, monitoring, and expansion as your business grows. Always improving.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════
+     BENEFITS
+════════════════════════════════ -->
+<section id="benefits" class="py-24 bg-dark/40">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="grid lg:grid-cols-2 gap-16 items-center">
+
+      <div class="fade-up">
+        <span class="text-secondary text-sm font-semibold uppercase tracking-widest">Benefits & Outcomes</span>
+        <h2 class="text-3xl md:text-4xl font-extrabold text-white mt-3 mb-8">
+          What you gain when you <span class="grad-text">automate with DG</span>
+        </h2>
+        <div class="space-y-5">
+          <div class="flex items-start gap-4">
+            <div class="w-10 h-10 flex-shrink-0 bg-secondary/15 rounded-xl flex items-center justify-center text-xl">💰</div>
+            <div>
+              <h4 class="text-white font-semibold mb-1">Dramatically Lower Operating Costs</h4>
+              <p class="text-muted text-sm">Reduce labor costs tied to repetitive tasks by up to 70%, reinvesting those savings into growth.</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-4">
+            <div class="w-10 h-10 flex-shrink-0 bg-secondary/15 rounded-xl flex items-center justify-center text-xl">⚡</div>
+            <div>
+              <h4 class="text-white font-semibold mb-1">10x Faster Execution Speed</h4>
+              <p class="text-muted text-sm">Automations run in milliseconds. What takes your team hours is done in seconds, around the clock.</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-4">
+            <div class="w-10 h-10 flex-shrink-0 bg-secondary/15 rounded-xl flex items-center justify-center text-xl">📈</div>
+            <div>
+              <h4 class="text-white font-semibold mb-1">Scalable Without Headcount</h4>
+              <p class="text-muted text-sm">Double your client volume without doubling your team. Your automations scale infinitely with demand.</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-4">
+            <div class="w-10 h-10 flex-shrink-0 bg-secondary/15 rounded-xl flex items-center justify-center text-xl">🎯</div>
+            <div>
+              <h4 class="text-white font-semibold mb-1">Focus on High-Value Work</h4>
+              <p class="text-muted text-sm">Free your team to focus on strategy, creativity, and relationships — the work that actually moves the needle.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fade-up">
+        <div class="card-glass rounded-2xl p-8">
+          <h3 class="text-white font-bold text-xl mb-6">Before vs After DG Automation</h3>
+          <div class="space-y-4">
+            <div>
+              <div class="flex justify-between text-xs mb-1.5">
+                <span class="text-muted">Manual hours per week</span>
+                <span class="text-red-400">Before: 40h → <span class="text-green-400">After: 3h</span></span>
+              </div>
+              <div class="h-2 bg-primary/50 rounded-full overflow-hidden">
+                <div class="h-full bg-gradient-to-r from-secondary to-cyan-400 rounded-full" style="width:93%"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between text-xs mb-1.5">
+                <span class="text-muted">Error rate in processes</span>
+                <span class="text-red-400">Before: 8% → <span class="text-green-400">After: 0.1%</span></span>
+              </div>
+              <div class="h-2 bg-primary/50 rounded-full overflow-hidden">
+                <div class="h-full bg-gradient-to-r from-secondary to-cyan-400 rounded-full" style="width:99%"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between text-xs mb-1.5">
+                <span class="text-muted">Operational cost savings</span>
+                <span class="text-green-400">Up to 70% reduction</span>
+              </div>
+              <div class="h-2 bg-primary/50 rounded-full overflow-hidden">
+                <div class="h-full bg-gradient-to-r from-secondary to-cyan-400 rounded-full" style="width:70%"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between text-xs mb-1.5">
+                <span class="text-muted">Team satisfaction score</span>
+                <span class="text-red-400">Before: 6/10 → <span class="text-green-400">After: 9.4/10</span></span>
+              </div>
+              <div class="h-2 bg-primary/50 rounded-full overflow-hidden">
+                <div class="h-full bg-gradient-to-r from-secondary to-cyan-400 rounded-full" style="width:94%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════
+     FAQ
+════════════════════════════════ -->
+<section id="faq" class="py-24">
+  <div class="max-w-3xl mx-auto px-6">
+    <div class="text-center mb-16 fade-up">
+      <span class="text-secondary text-sm font-semibold uppercase tracking-widest">FAQ</span>
+      <h2 class="text-3xl md:text-4xl font-extrabold text-white mt-3">
+        Common <span class="grad-text">questions answered</span>
+      </h2>
+    </div>
+
+    <div class="space-y-4 fade-up" id="faq-container">
+
+      <div class="faq-item card-glass rounded-2xl overflow-hidden cursor-pointer">
+        <div class="faq-toggle flex items-center justify-between p-5">
+          <span class="text-white font-semibold text-sm">How long does it take to get automations live?</span>
+          <span class="faq-icon text-secondary text-xl font-bold flex-shrink-0">+</span>
+        </div>
+        <div class="faq-answer px-5 pb-5 text-muted text-sm leading-relaxed">
+          Most automations go live within 2 weeks of the kickoff call. Complex multi-system workflows may take 3–4 weeks. We'll give you a precise timeline after the free audit.
+        </div>
+      </div>
+
+      <div class="faq-item card-glass rounded-2xl overflow-hidden cursor-pointer">
+        <div class="faq-toggle flex items-center justify-between p-5">
+          <span class="text-white font-semibold text-sm">Do I need technical knowledge to use your automations?</span>
+          <span class="faq-icon text-secondary text-xl font-bold flex-shrink-0">+</span>
+        </div>
+        <div class="faq-answer px-5 pb-5 text-muted text-sm leading-relaxed">
+          Not at all. We handle 100% of the technical setup. You'll have a simple dashboard to monitor everything, and our team handles all maintenance and updates.
+        </div>
+      </div>
+
+      <div class="faq-item card-glass rounded-2xl overflow-hidden cursor-pointer">
+        <div class="faq-toggle flex items-center justify-between p-5">
+          <span class="text-white font-semibold text-sm">Which tools and platforms do you integrate with?</span>
+          <span class="faq-icon text-secondary text-xl font-bold flex-shrink-0">+</span>
+        </div>
+        <div class="faq-answer px-5 pb-5 text-muted text-sm leading-relaxed">
+          We integrate with 500+ platforms including Salesforce, HubSpot, Google Workspace, Notion, Slack, Airtable, Shopify, QuickBooks, and virtually any tool with an API.
+        </div>
+      </div>
+
+      <div class="faq-item card-glass rounded-2xl overflow-hidden cursor-pointer">
+        <div class="faq-toggle flex items-center justify-between p-5">
+          <span class="text-white font-semibold text-sm">What's the ROI guarantee all about?</span>
+          <span class="faq-icon text-secondary text-xl font-bold flex-shrink-0">+</span>
+        </div>
+        <div class="faq-answer px-5 pb-5 text-muted text-sm leading-relaxed">
+          We guarantee you'll see measurable ROI within 30 days of going live or we'll work for free until you do. We're that confident in our results.
+        </div>
+      </div>
+
+      <div class="faq-item card-glass rounded-2xl overflow-hidden cursor-pointer">
+        <div class="faq-toggle flex items-center justify-between p-5">
+          <span class="text-white font-semibold text-sm">Is my data secure with DG Automation?</span>
+          <span class="faq-icon text-secondary text-xl font-bold flex-shrink-0">+</span>
+        </div>
+        <div class="faq-answer px-5 pb-5 text-muted text-sm leading-relaxed">
+          Yes. We are fully GDPR compliant, use end-to-end encryption, and never store your sensitive data on our servers. Security is built into every automation we build.
+        </div>
+      </div>
+
+      <div class="faq-item card-glass rounded-2xl overflow-hidden cursor-pointer">
+        <div class="faq-toggle flex items-center justify-between p-5">
+          <span class="text-white font-semibold text-sm">How much does it cost?</span>
+          <span class="faq-icon text-secondary text-xl font-bold flex-shrink-0">+</span>
+        </div>
+        <div class="faq-answer px-5 pb-5 text-muted text-sm leading-relaxed">
+          Pricing is custom based on your needs and automation complexity. Most clients see the automations pay for themselves within the first month. Start with a free audit to get a tailored quote.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════
+     FINAL CTA
+════════════════════════════════ -->
+<section id="contact" class="py-24 relative overflow-hidden">
+  <!-- Background -->
+  <div class="absolute inset-0" style="background: linear-gradient(135deg, rgba(27,60,83,0.8) 0%, rgba(8,131,149,0.2) 100%)"></div>
+  <div class="absolute inset-0 hero-grid opacity-30"></div>
+  <div class="absolute top-10 right-20 w-64 h-64 rounded-full opacity-10" style="background:radial-gradient(circle,#088395,transparent 70%)"></div>
+
+  <div class="max-w-4xl mx-auto px-6 text-center relative fade-up">
+
+    <!-- Urgency -->
+    <div class="inline-flex items-center gap-2 bg-red-500/15 border border-red-500/30 text-red-400 text-xs font-semibold px-4 py-2 rounded-full mb-6">
+      🔥 Only 3 free audit slots remaining this month
+    </div>
+
+    <h2 class="text-4xl md:text-5xl font-extrabold text-white mb-6">
+      Ready to <span class="grad-text">stop wasting time</span><br/>on manual work?
+    </h2>
+    <p class="text-muted text-lg mb-10 max-w-2xl mx-auto">
+      Book your free 30-minute automation audit. We'll identify your biggest inefficiencies and show you exactly how much time and money you can save — no strings attached.
+    </p>
+
+    <!-- CTA form -->
+    <div class="card-glass rounded-2xl p-8 max-w-lg mx-auto">
+      <h3 class="text-white font-bold text-xl mb-6">Claim Your Free Audit</h3>
+      <div class="space-y-4 text-left">
+        <div>
+          <label class="text-muted text-xs font-medium block mb-1.5">Full Name</label>
+          <input type="text" placeholder="John Smith" class="w-full bg-primary/30 border border-white/10 text-white placeholder-muted/50 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-secondary transition-colors"/>
+        </div>
+        <div>
+          <label class="text-muted text-xs font-medium block mb-1.5">Work Email</label>
+          <input type="email" placeholder="john@company.com" class="w-full bg-primary/30 border border-white/10 text-white placeholder-muted/50 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-secondary transition-colors"/>
+        </div>
+        <div>
+          <label class="text-muted text-xs font-medium block mb-1.5">Company Size</label>
+          <select class="w-full bg-primary/30 border border-white/10 text-muted rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-secondary transition-colors">
+            <option>1–10 employees</option>
+            <option>11–50 employees</option>
+            <option>51–200 employees</option>
+            <option>200+ employees</option>
+          </select>
+        </div>
+        <button class="w-full btn-glow text-white font-bold py-4 rounded-xl text-base mt-2">
+          Book My Free Audit →
+        </button>
+      </div>
+      <p class="text-muted text-xs text-center mt-4">No credit card required · 30-min call · Instant value guaranteed</p>
+    </div>
+
+    <!-- Trust badges -->
+    <div class="flex flex-wrap justify-center gap-6 mt-10 text-xs text-muted">
+      <span class="flex items-center gap-1.5"><span class="text-secondary">🔒</span> GDPR Compliant</span>
+      <span class="flex items-center gap-1.5"><span class="text-secondary">⚡</span> Live in 2 Weeks</span>
+      <span class="flex items-center gap-1.5"><span class="text-secondary">💯</span> 30-Day ROI Guarantee</span>
+      <span class="flex items-center gap-1.5"><span class="text-secondary">🏆</span> 150+ Happy Clients</span>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════
+     FOOTER
+════════════════════════════════ -->
+<footer class="bg-darker border-t border-white/5 py-12">
+  <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-4 gap-8">
+    <div>
+      <div class="flex items-center gap-3 mb-4">
+        <div class="w-8 h-8 rounded-lg btn-glow flex items-center justify-center text-white font-bold text-xs">DG</div>
+        <span class="text-white font-semibold">DG Automation</span>
+      </div>
+      <p class="text-muted text-xs leading-relaxed">Intelligent automation solutions for modern businesses. Work smarter, not harder.</p>
+    </div>
+    <div>
+      <h4 class="text-white font-semibold text-sm mb-4">Services</h4>
+      <ul class="space-y-2 text-muted text-xs">
+        <li><a href="#" class="hover:text-secondary transition-colors">Process Automation</a></li>
+        <li><a href="#" class="hover:text-secondary transition-colors">CRM Integration</a></li>
+        <li><a href="#" class="hover:text-secondary transition-colors">AI Workflows</a></li>
+        <li><a href="#" class="hover:text-secondary transition-colors">Reporting Automation</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="text-white font-semibold text-sm mb-4">Company</h4>
+      <ul class="space-y-2 text-muted text-xs">
+        <li><a href="#" class="hover:text-secondary transition-colors">About Us</a></li>
+        <li><a href="#case-studies" class="hover:text-secondary transition-colors">Case Studies</a></li>
+        <li><a href="#" class="hover:text-secondary transition-colors">Blog</a></li>
+        <li><a href="#contact" class="hover:text-secondary transition-colors">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="text-white font-semibold text-sm mb-4">Get Started</h4>
+      <p class="text-muted text-xs mb-3">Ready to automate? Book your free audit today.</p>
+      <a href="#contact" class="btn-glow text-white text-xs font-semibold px-5 py-2.5 rounded-full inline-block">Free Audit →</a>
+    </div>
+  </div>
+  <div class="section-divider max-w-6xl mx-auto mt-10 mb-6"></div>
+  <p class="text-center text-muted text-xs">© 2025 DG Automation. All rights reserved. · Privacy Policy · Terms of Service</p>
+</footer>
+
+
+<!-- ════════════ SCRIPTS ════════════ -->
+<script>
+$(document).ready(function () {
+
+  /* ── Navbar scroll ── */
+  $(window).on('scroll', function () {
+    if ($(this).scrollTop() > 60) {
+      $('#navbar').addClass('navbar-scrolled').removeClass('py-4').addClass('py-2');
+    } else {
+      $('#navbar').removeClass('navbar-scrolled').addClass('py-4').removeClass('py-2');
+    }
+  });
+
+  /* ── Mobile menu ── */
+  $('#menu-btn').on('click', function () {
+    $('#mobile-menu').slideToggle(200);
+  });
+  $('#mobile-menu a').on('click', function () {
+    $('#mobile-menu').slideUp(200);
+  });
+
+  /* ── Smooth scroll ── */
+  $('a[href^="#"]').on('click', function (e) {
+    const target = $(this.getAttribute('href'));
+    if (target.length) {
+      e.preventDefault();
+      $('html, body').animate({ scrollTop: target.offset().top - 80 }, 600, 'swing');
+    }
+  });
+
+  /* ── Fade-up on scroll ── */
+  function checkFade() {
+    $('.fade-up').each(function () {
+      const top = $(this).offset().top;
+      const windowBottom = $(window).scrollTop() + $(window).height();
+      if (windowBottom > top + 60) {
+        $(this).addClass('visible');
+      }
+    });
+  }
+  $(window).on('scroll', checkFade);
+  checkFade();
+
+  /* ── Animated counters ── */
+  let counted = false;
+  function runCounters() {
+    if (counted) return;
+    const statsTop = $('.counter').first().offset().top;
+    if ($(window).scrollTop() + $(window).height() > statsTop + 50) {
+      counted = true;
+      $('.counter').each(function () {
+        const $el = $(this);
+        const target = parseInt($el.data('target'), 10);
+        const duration = 1600;
+        const step = Math.ceil(target / (duration / 20));
+        let current = 0;
+        const timer = setInterval(function () {
+          current = Math.min(current + step, target);
+          $el.text(current.toLocaleString());
+          if (current >= target) clearInterval(timer);
+        }, 20);
+      });
+    }
+  }
+  $(window).on('scroll', runCounters);
+  runCounters();
+
+  /* ── FAQ accordion ── */
+  $('.faq-toggle').on('click', function () {
+    const $item = $(this).closest('.faq-item');
+    const wasOpen = $item.hasClass('open');
+    $('.faq-item').removeClass('open').find('.faq-answer').slideUp(250);
+    if (!wasOpen) {
+      $item.addClass('open').find('.faq-answer').slideDown(250);
+    }
+  });
+
+});
+</script>
+
+</body>
+</html>
